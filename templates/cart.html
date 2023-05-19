@@ -1,0 +1,71 @@
+{% extends 'bootstrap.html' %}
+{% block title %}
+ Cart
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+    <div class="col-8">
+        <h1>Your Cart</h1>
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price(per peice)</th>
+      <th scope="col">Delivey Date</th>
+      <th scope="col">Delete Item</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in retrive_cart %}
+    <tr>
+      <th scope="row">1</th>
+      <td>{{ item.item }}</td>
+
+        <td>
+            <form method="post" action="/update_quantity/{{ item.id }}/">{% csrf_token %}
+                <input type="number" value="{{ item.quantity }}" name="get_quantity">
+                <button class="btn btn-warning" type="submit">Update</button>
+
+            </form>
+        </td>
+        <td>{{ item.price}}</td>
+        <td>{{ item.delivery_date }}</td>
+        <td><a href="/delete_cart_item/{{ item.id }}/"><button type="button" class="btn btn-danger">Delete</button></a></td>
+    </tr>
+  {% endfor %}
+<!--    <tr>-->
+<!--      <th scope="row">2</th>-->
+<!--      <td>Jacob</td>-->
+<!--      <td>Thornton</td>-->
+<!--      <td>@fat</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <th scope="row">3</th>-->
+<!--      <td colspan="2">Larry the Bird</td>-->
+<!--      <td>@twitter</td>-->
+<!--    </tr>-->
+  </tbody>
+</table>
+
+    </div>
+
+    <div class="col-4">
+        <h1>Cart Summary</h1>
+        <ul class="list-group" style="position:relative; top:50px;">
+  <li class="list-group-item">Total Prize :- {{ total_price }}</li>
+  <li class="list-group-item"><a href="/adress/">Buy Now</a></li>
+  <li class="list-group-item"><a href="/index/">Continue Shopping</a></li>
+
+        </ul>
+    </div>
+  </div>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+</script>
+{% endblock %}

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <title>{{ details.name }}-show</title>
+  </head>
+  <body>
+  {% for msg in messages %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+   {{ msg }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+  {% endfor %}
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <img src="/media/{{ details.img }}/" style="height:300px;width:300px">
+        </div>
+        <div class="col" style="margin:10px; padding:20px 20px;">
+          <h1>{{ details.name }}</h1>
+          <h4>{{ details.disc }}</h4>
+          <h3>${{ details.price }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-grid gap-2">
+        <form action="/cart/" method="post">{% csrf_token %}
+            <input type="number" value="{{ details.id }}"  hidden name="get_id"><br>
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="submit" style="margin:20px; font-size:25px;">Add To Cart</button>
+
+            </div>
+
+        </form>
+
+
+</div>
+    <h1 style="margin:20px; position:relative; left:42%;">REVIEWS</h1>
+<form action="/reviews/{{ details.id }}/"  method="post" class="input-group mb-3">
+  {% csrf_token %}
+  <input type="text" class="form-control" name="review" aria-label="Recipient's username" aria-describedby="button-addon2" style="border:none;border-bottom:1px solid black;">
+  <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
+
+</form>
+    <div>
+             <p id="review" style="cursor:pointer;">reviews({{ count }})</p>
+    {% for item in retrive_review %}
+    <div class="review" style="width:96vw; border:2px solid black; border-radius:5px; margin:10px; padding:10px; background-color: lightgray;">
+      <h4 style="border-bottom:1px solid black; padding:10px; color:blue;">{{ item.user.username }} ({{ item.posted_on }})</h4>
+        {% if item.user == user %}
+        <i class="bi bi-trash-fill"></i><a href="/delete_review/{{ item.id }}/"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-trash-fill" id="delete" viewBox="0 0 16 16" style="float:right;position:relative;top:-41px;right:10px;cursor:pointer">
+  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+</svg></a>
+        {% endif %}
+      <p>{{ item.review }}</p>
+    </div>
+
+    </div>
+    {% endfor %}
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+       $('.review').hide()
+      $(document).ready(function(){
+            $('#review').click(function(){
+                $('.review').toggle(100)
+            })
+
+      })
+  </script>
+
+
+  </body>
+</html>

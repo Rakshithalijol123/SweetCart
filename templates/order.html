@@ -1,0 +1,43 @@
+{% extends 'bootstrap.html' %}
+{% block title %}
+ Orders
+{% endblock %}
+
+{% block content %}
+<h1>Order Details</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Total Price</th>
+      <th scope="col">Delivery date</th>
+      <th scope="col">Address</th>
+      <th scope="col">Delete Order</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for order in get_order_data %}
+    <tr>
+      <th scope="row">1</th>
+      <td>{{ order.order_cart.item.name }}</td>
+      <td>{{ order.order_cart.price }}</td>
+      <td>{{ order.order_cart.delivery_date }}</td>
+      <td>{{ order.adress }}</td>
+      <td><a href="/delete_order_item/{{ order.id }}/"><button type="button" class="btn btn-danger">Delete</button></a></td>
+    </tr>
+  {% endfor %}
+<!--    <tr>-->
+<!--      <th scope="row">2</th>-->
+<!--      <td>Jacob</td>-->
+<!--      <td>Thornton</td>-->
+<!--      <td>@fat</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <th scope="row">3</th>-->
+<!--      <td colspan="2">Larry the Bird</td>-->
+<!--      <td>@twitter</td>-->
+<!--    </tr>-->
+  </tbody>
+</table>
+{% endblock %}
